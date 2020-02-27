@@ -19,3 +19,14 @@ func Sum(n1 int, args ...int) int {
 	}
 	return sum
 }
+
+func DeferTest(n1, n2 int) int {
+	//将值拷贝入栈
+	defer fmt.Println("this is defer test n1:", n1)
+	defer fmt.Println("this is defer test n2:", n2)
+	n1++
+	n2++
+	res := n1 + n2
+	fmt.Println("res:", res)
+	return res
+}

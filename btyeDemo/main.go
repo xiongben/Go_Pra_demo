@@ -32,9 +32,21 @@ func main() {
 	//fmt.Println(count.Age)
 
 	//闭包问题
-	f := addUpper()
-	fmt.Println(f(1))
-	fmt.Println(f(2))
+	//f := addUpper()
+	//fmt.Println(f(1))
+	//fmt.Println(f(2))
+
+	//defer
+	//res3 := count.DeferTest(2,3)
+	//fmt.Println(res3)
+
+	//num2 := new(int)
+	//*num2 = 100
+	//fmt.Printf("%T,%v,%v,%v",num2,num2,&num2,*num2)
+
+	//错误处理
+	test()
+	print("==end=====")
 }
 
 func addUpper() func(int) int {
@@ -43,4 +55,17 @@ func addUpper() func(int) int {
 		n = n + i
 		return n
 	}
+}
+
+func test() int {
+	defer func() {
+		//捕获异常
+		if err := recover(); err != nil {
+			fmt.Println("err=", err)
+		}
+	}()
+	num1 := 10
+	num2 := 0
+	res := num1 / num2
+	return res
 }
