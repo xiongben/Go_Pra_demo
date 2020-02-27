@@ -45,8 +45,35 @@ func main() {
 	//fmt.Printf("%T,%v,%v,%v",num2,num2,&num2,*num2)
 
 	//错误处理
-	test()
-	print("==end=====")
+	//test()
+	//print("==end=====")
+
+	//数组
+	//var hens [2]float64
+	//hens[0] = 3.0
+	//hens[1] = 5.0
+	//
+	//totalweight := 0.0
+	//for i:=0;i<2;i++ {
+	//	totalweight+= hens[i]
+	//}
+	//print(totalweight)
+
+	var numArr [3]int = [3]int{1, 2, 3}
+	//var numArr2 = [...]int{1,2,3,4,5}
+	//fmt.Println(numArr)
+	//fmt.Println(numArr2)
+	//for index,value := range numArr2 {
+	//	fmt.Println(index,"=>",value)
+	//}
+
+	testArr(numArr)
+	fmt.Println(numArr)
+	testArr2(&numArr)
+	fmt.Println(numArr)
+
+	//切片
+
 }
 
 func addUpper() func(int) int {
@@ -68,4 +95,12 @@ func test() int {
 	num2 := 0
 	res := num1 / num2
 	return res
+}
+
+func testArr(arr1 [3]int) {
+	arr1[0] = 100
+}
+
+func testArr2(arr1 *[3]int) {
+	(*arr1)[0] = 100
 }
