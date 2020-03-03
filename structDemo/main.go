@@ -1,6 +1,9 @@
 package main
 
-import "fmt"
+import (
+	"encoding/json"
+	"fmt"
+)
 
 //如果结构体的字段类型为：指针，slice，map的零值为nil，即还没有分配空间，需要先make，再使用
 type Cat struct {
@@ -10,6 +13,25 @@ type Cat struct {
 	ptr   *int
 	slice []int
 	map1  map[string]string
+}
+
+type Point struct {
+	x int
+	y int
+}
+
+type Rect struct {
+	leftUp, rightUp Point
+}
+
+type Rect2 struct {
+	leftUp, rightUP *Point
+}
+
+type Monster struct {
+	Name  string `json:"name"` //tag 结构体的标签
+	Age   int    `json:"age"`
+	Skill string `json:"skill"`
 }
 
 func main() {
@@ -44,4 +66,20 @@ func main() {
 	(*cat4).Name = "Tom"
 	cat4.Age = 16
 	fmt.Println(*cat4)
+
+	r1 := Rect{Point{1, 2}, Point{3, 4}}
+	fmt.Println(r1)
+
+	r2 := Rect2{&Point{10, 20}, &Point{30, 40}}
+	fmt.Println(&r2.leftUp, &r2.rightUP)
+	fmt.Println(r2.leftUp, r2.rightUP)
+	fmt.Println(*r2.leftUp, *r2.rightUP)
+
+	monster1 := Monster{"牛魔王", 500, "芭蕉扇"}
+	//序列化为json字符串
+	str1, err := json.Marshal(monster1)
+	if err != nil {
+		fmt.Println(err)
+	}
+	fmt.Println(string(str1))
 }
