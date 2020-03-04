@@ -1,6 +1,8 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+)
 
 type Student struct {
 	name   string
@@ -24,4 +26,8 @@ func main() {
 	var stu3 *Student = &Student{"xiaohai", "male"}
 	//stu3.getStudent()
 	(*stu3).getStudent()
+
+	//stutest1 := model.StudentTest{Name:"kakaxi"}
+	//fmt.Println(stutest1)
+
 }
