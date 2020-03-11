@@ -32,6 +32,12 @@ func reflectTest02(b interface{}) {
 	}
 }
 
+func reflectTest03(b interface{}) {
+	rVal := reflect.ValueOf(b)
+	rVal.Elem().SetInt(150)
+	//rVal.Elem().SetInt(150)  //指针类型！！！
+}
+
 type Student struct {
 	Name string
 	Age  int
@@ -55,4 +61,9 @@ func main() {
 		d
 	)
 	fmt.Println(a, b, c, d)
+
+	fmt.Println("==================")
+	num := 100
+	reflectTest03(&num)
+	fmt.Println(num)
 }
