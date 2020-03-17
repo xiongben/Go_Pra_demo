@@ -41,9 +41,9 @@ func Login(userId int, userPass int) (err error) {
 	//先发送长度，再发送消息本身
 	var pkglen uint32
 	pkglen = uint32(len(data))
-	var bytes []byte
-	binary.BigEndian.PutUint32(bytes[0:4], pkglen)
-	n, err := conn.Write(bytes)
+	var buf []byte
+	binary.BigEndian.PutUint32(buf[:4], pkglen)
+	n, err := conn.Write(buf)
 	if n != 4 || err != nil {
 		fmt.Println("conn.write byte err = ", err)
 		return
