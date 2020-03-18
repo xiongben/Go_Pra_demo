@@ -1,7 +1,7 @@
 package main
 
 import (
-	"awesomeProject1/chatProject/client/login"
+	"awesomeProject1/chatProject/client/process"
 	"fmt"
 )
 
@@ -23,24 +23,25 @@ func main() {
 		switch key {
 		case 1:
 			fmt.Println("login in chatroom")
-			loop = false
+			fmt.Println("请输入用户id")
+			fmt.Scanf("%d\n", &userId)
+			fmt.Println("请输入用户密码")
+			fmt.Scanf("%d\n", &userPass)
+			process.Login(userId, userPass)
+			//loop = false
 		case 2:
 			fmt.Println("register")
-			loop = false
+			//loop = false
 		case 3:
 			fmt.Println("login out")
-			loop = false
+			//loop = false
 		default:
 			fmt.Println("you put error message")
 		}
 	}
 
 	if key == 1 {
-		fmt.Println("请输入用户id")
-		fmt.Scanf("%d\n", &userId)
-		fmt.Println("请输入用户密码")
-		fmt.Scanf("%d\n", &userPass)
-		login.Login(userId, userPass)
+
 		//if err != nil {
 		//	fmt.Println("login fail")
 		//} else {

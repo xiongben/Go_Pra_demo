@@ -1,4 +1,4 @@
-package login
+package process
 
 import (
 	"awesomeProject1/chatProject/common/message"
@@ -70,7 +70,11 @@ func Login(userId int, userPass int) (err error) {
 	err = json.Unmarshal([]byte(mes.Data), &loginResMes)
 
 	if loginResMes.Code == 200 {
-		fmt.Println("登录成功")
+		//fmt.Println("登录成功")
+		go serverProcessMes(conn)
+		for {
+			showMenu()
+		}
 	} else if loginResMes.Code == 500 {
 		fmt.Println(loginResMes.Error)
 	}
