@@ -2,6 +2,7 @@ package process
 
 import (
 	"awesomeProject1/chatProject/common/message"
+	"awesomeProject1/chatProject/server/model"
 	"awesomeProject1/chatProject/utils"
 	"encoding/json"
 	"fmt"
@@ -9,7 +10,7 @@ import (
 )
 
 func ServerProcessLogin(conn net.Conn, mes *message.Message) (err error) {
-
+	fmt.Println("========")
 	var loginMes message.LoginMes
 	err = json.Unmarshal([]byte(mes.Data), &loginMes)
 	if err != nil {
@@ -21,13 +22,21 @@ func ServerProcessLogin(conn net.Conn, mes *message.Message) (err error) {
 	resMes.Type = message.LoginResMesType
 
 	var loginResMes message.LoginResMes
-
-	if loginMes.UserId == 100 && loginMes.UserPass == 123456 {
-		loginResMes.Code = 200
-	} else {
+	fmt.Println(loginMes)
+	user, err := model.MyUserDao.Login(loginMes.UserId, loginMes.UserPass)
+	fmt.Println(user)
+	if err != nil {
 		loginResMes.Code = 500
 		loginResMes.Error = "用户不存在，请注册后再使用"
+	} else {
+		loginResMes.Code = 200
 	}
+	//if loginMes.UserId == 100 && loginMes.UserPass == 123456 {
+	//	loginResMes.Code = 200
+	//} else {
+	//	loginResMes.Code = 500
+	//	loginResMes.Error = "用户不存在，请注册后再使用"
+	//}
 
 	data, err := json.Marshal(loginResMes)
 	if err != nil {

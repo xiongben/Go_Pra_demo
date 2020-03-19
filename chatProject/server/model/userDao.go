@@ -6,6 +6,11 @@ import (
 	"github.com/garyburd/redigo/redis"
 )
 
+//在服务器启动后，就初始化一个userDao实例
+var (
+	MyUserDao *UserDao
+)
+
 type UserDao struct {
 	pool *redis.Pool
 }
@@ -18,6 +23,7 @@ func NewUserDao(pool *redis.Pool) (userDao *UserDao) {
 }
 
 func (this *UserDao) getUserById(conn redis.Conn, id int) (user *User, err error) {
+	fmt.Println("find user info in redis")
 	res, err := redis.String(conn.Do("HGet", "users", id))
 	if err != nil {
 		if err == redis.ErrNil {

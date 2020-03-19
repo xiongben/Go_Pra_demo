@@ -1,6 +1,7 @@
 package main
 
 import (
+	"awesomeProject1/chatProject/server/model"
 	"awesomeProject1/chatProject/server/process"
 	"fmt"
 	"net"
@@ -8,6 +9,8 @@ import (
 
 func main() {
 	fmt.Println("服务器在8889端口监听。。。")
+	model.InitPool("0.0.0.0:8889")
+	initUserDao()
 	listen, err := net.Listen("tcp", "0.0.0.0:8889")
 	if err != nil {
 		fmt.Println("net listen err = ", err)
@@ -23,4 +26,8 @@ func main() {
 		//启动一个协程和客户端保持通信
 		process.Processfn(conn)
 	}
+}
+
+func initUserDao() {
+	model.MyUserDao = model.NewUserDao(model.Pool)
 }
