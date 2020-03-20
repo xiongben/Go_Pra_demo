@@ -1,9 +1,12 @@
 package message
 
+import "awesomeProject1/chatProject/server/model"
+
 const (
-	LoginMesType    = "LoginMes"
-	LoginResMesType = "LoginResMes"
-	RegisterMesType = "RegisterMes"
+	LoginMesType       = "LoginMes"
+	LoginResMesType    = "LoginResMes"
+	RegisterMesType    = "RegisterMes"
+	RegisterResMesType = "RegisterResMes"
 )
 
 type Message struct {
@@ -23,4 +26,10 @@ type LoginResMes struct {
 }
 
 type RegisterMes struct {
+	User model.User `json:"user"`
+}
+
+type RegisterResMes struct {
+	Code  int    `json:"code"`
+	Error string `json:"error"`
 }

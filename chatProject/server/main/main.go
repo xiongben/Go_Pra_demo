@@ -9,7 +9,7 @@ import (
 
 func main() {
 	fmt.Println("服务器在8889端口监听。。。")
-	model.InitPool("0.0.0.0:8889")
+	model.InitPool("0.0.0.0:6379")
 	initUserDao()
 	listen, err := net.Listen("tcp", "0.0.0.0:8889")
 	if err != nil {

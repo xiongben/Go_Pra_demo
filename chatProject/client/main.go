@@ -7,6 +7,7 @@ import (
 
 var userId int
 var userPass int
+var userName string
 
 func main() {
 	//get user's choice
@@ -31,6 +32,12 @@ func main() {
 			//loop = false
 		case 2:
 			fmt.Println("register")
+			fmt.Println("请输入用户id")
+			fmt.Scanf("%d\n", &userId)
+			fmt.Println("请输入设置密码")
+			fmt.Scanf("%d\n", &userPass)
+			fmt.Println("请输入用户名称")
+			fmt.Scanf("%d\n", &userName)
 			//loop = false
 		case 3:
 			fmt.Println("login out")
