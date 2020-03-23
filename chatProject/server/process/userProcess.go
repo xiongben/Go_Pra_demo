@@ -67,5 +67,46 @@ func ServerProcessLogin(conn net.Conn, mes *message.Message) (err error) {
 }
 
 func ServerProcessRegister(conn net.Conn, mes *message.Message) (err error) {
+	var registerMes message.RegisterMes
+	err = json.Unmarshal([]byte(mes.Data), &registerMes)
+	if err != nil {
+		fmt.Println("json.unmarshal fail err = ", err)
+		return
+	}
+	//response message
+	var resMes message.Message
+	resMes.Type = message.RegisterResMesType
 
+	var regisResMes message.RegisterResMes
+	//fmt.Println(loginMes)
+	err = model.MyUserDao.Register(&registerMes.User)
+	if err != nil {
+		if err == model.ERROR_USER_EXISTS {
+			regisResMes.Code = 505
+			regisResMes.Error = model.ERROR_USER_EXISTS.Error()
+		} else {
+			regisResMes.Code = 506
+			regisResMes.Error = "注册发生未知错误"
+		}
+	} else {
+		regisResMes.Code = 200
+	}
+
+	data, err := json.Marshal(regisResMes)
+	if err != nil {
+		fmt.Println("json.marshal fail err= ", err)
+		return
+	}
+	resMes.Data = string(data)
+	data, err = json.Marshal(resMes)
+	if err != nil {
+		fmt.Println("json.marshal fail err= ", err)
+		return
+	}
+	//发送
+	err = utils.WritePkg(conn, data)
+	if err != nil {
+		fmt.Println("send to client err = ", err)
+	}
+	return
 }

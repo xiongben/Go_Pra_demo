@@ -82,6 +82,7 @@ func Login(userId int, userPass int) (err error) {
 }
 
 func Register(userId int, userPass int, userName string) (err error) {
+
 	conn, err := net.Dial("tcp", "0.0.0.0:8889")
 	if err != nil {
 		fmt.Println("net dial err = ", err)
@@ -90,7 +91,7 @@ func Register(userId int, userPass int, userName string) (err error) {
 
 	defer conn.Close()
 	var mes message.Message
-	mes.Type = message.RegisterResMesType
+	mes.Type = message.RegisterMesType
 	var regisMes message.RegisterMes
 	regisMes.User.UserId = userId
 	regisMes.User.UserPass = userPass
@@ -102,7 +103,9 @@ func Register(userId int, userPass int, userName string) (err error) {
 		return
 	}
 	mes.Data = string(data)
-
+	//fmt.Println("==========")
+	//fmt.Println(mes)
+	//fmt.Println("==========")
 	data, err = json.Marshal(mes)
 	if err != nil {
 		fmt.Println("json.marshal err = ", err)
@@ -119,7 +122,7 @@ func Register(userId int, userPass int, userName string) (err error) {
 		fmt.Println("conn.write byte err = ", err)
 		return
 	}
-
+	//fmt.Println(data)
 	_, err = conn.Write(data)
 	if err != nil {
 		fmt.Println("conn.write byte(data) err = ", err)

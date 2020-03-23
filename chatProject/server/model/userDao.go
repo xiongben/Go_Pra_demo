@@ -67,7 +67,7 @@ func (this *UserDao) Register(user *User) (err error) {
 	if err != nil {
 		return
 	}
-	_, err = conn.Do("HSet", "users", string(data))
+	_, err = conn.Do("HSet", "users", user.UserId, string(data))
 	if err != nil {
 		fmt.Println("保存注册用户错误 err= ", err)
 		return
