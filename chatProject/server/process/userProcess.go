@@ -3,7 +3,7 @@ package process
 import (
 	"awesomeProject1/chatProject/common/message"
 	"awesomeProject1/chatProject/server/model"
-	"awesomeProject1/chatProject/utils"
+	"awesomeProject1/chatProject/server/utils"
 	"encoding/json"
 	"fmt"
 	"net"
@@ -44,6 +44,12 @@ func (this *UserProcess) ServerProcessLogin(mes *message.Message) (err error) {
 
 	} else {
 		loginResMes.Code = 200
+		//把登录成功的用户放到usermgr中
+		this.UserId = loginMes.UserId
+		userMgr.AddOnlineProcess(this)
+		for id, _ := range userMgr.onlineUsers {
+			loginResMes.UserIds = append(loginResMes.UserIds, id)
+		}
 	}
 	//if loginMes.UserId == 100 && loginMes.UserPass == 123456 {
 	//	loginResMes.Code = 200
@@ -64,7 +70,11 @@ func (this *UserProcess) ServerProcessLogin(mes *message.Message) (err error) {
 		return
 	}
 	//发送
-	err = utils.WritePkg(this.Conn, data)
+	tf := &utils.Transfer{
+		Conn: this.Conn,
+		Buf:  [8096]byte{},
+	}
+	err = tf.WritePkg(data)
 	if err != nil {
 		fmt.Println("send to client err = ", err)
 	}
@@ -109,7 +119,11 @@ func (this *UserProcess) ServerProcessRegister(mes *message.Message) (err error)
 		return
 	}
 	//发送
-	err = utils.WritePkg(this.Conn, data)
+	tf := &utils.Transfer{
+		Conn: this.Conn,
+		Buf:  [8096]byte{},
+	}
+	err = tf.WritePkg(data)
 	if err != nil {
 		fmt.Println("send to client err = ", err)
 	}

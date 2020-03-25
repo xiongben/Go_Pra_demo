@@ -71,6 +71,10 @@ func Login(userId int, userPass int) (err error) {
 
 	if loginResMes.Code == 200 {
 		//fmt.Println("登录成功")
+		fmt.Println("当前在线用户列表如下：")
+		for _, v := range loginResMes.UserIds {
+			fmt.Println("userid: ", v)
+		}
 		go serverProcessMes(conn)
 		for {
 			showMenu()

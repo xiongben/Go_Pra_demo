@@ -24,10 +24,20 @@ func main() {
 			fmt.Println("listen accept err = ", err)
 		}
 		//启动一个协程和客户端保持通信
-		process.Processfn(conn)
+		//process.Processfn(conn)
+		processcreat(conn)
 	}
 }
 
 func initUserDao() {
 	model.MyUserDao = model.NewUserDao(model.Pool)
+}
+
+func processcreat(conn net.Conn) {
+	processor2 := process.Processor{Conn: conn}
+	err := processor2.Processfn()
+	if err != nil {
+		fmt.Println("客户端和服务器通讯协程错误=err", err)
+		return
+	}
 }

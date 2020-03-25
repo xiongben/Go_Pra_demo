@@ -2,43 +2,52 @@ package process
 
 import (
 	"awesomeProject1/chatProject/common/message"
-	"awesomeProject1/chatProject/utils"
+	"awesomeProject1/chatProject/server/utils"
 	"fmt"
 	"io"
 	"net"
 )
 
-func Processfn(conn net.Conn) {
-	defer conn.Close()
+type Processor struct {
+	Conn net.Conn
+}
+
+func (this *Processor) Processfn() (err error) {
+	defer this.Conn.Close()
 
 	for {
-		mes, err := utils.Readpkg(conn)
+		tf := &utils.Transfer{
+			Conn: this.Conn,
+			Buf:  [8096]byte{},
+		}
+		mes, err := tf.Readpkg()
 		if err != nil {
 			if err == io.EOF {
 				fmt.Println("客户端退出，服务器端也退出。。")
-				return
+				return err
 			} else {
 				fmt.Println(err)
-				return
+				return err
 			}
 		}
 		fmt.Println("mes= ", mes)
-		err = ServerProcessMes(conn, &mes)
+		err = this.ServerProcessMes(&mes)
 		if err != nil {
-			return
+			return err
 		}
 	}
+	return
 }
 
-func ServerProcessMes(conn net.Conn, mes *message.Message) (err error) {
+func (this *Processor) ServerProcessMes(mes *message.Message) (err error) {
 
 	switch mes.Type {
 	case message.LoginMesType:
 		//处理登录逻辑
-		up := UserProcess{Conn: conn}
+		up := &UserProcess{Conn: this.Conn}
 		err = up.ServerProcessLogin(mes)
 	case message.RegisterMesType:
-		up := UserProcess{Conn: conn}
+		up := &UserProcess{Conn: this.Conn}
 		err = up.ServerProcessRegister(mes)
 	//处理注册
 	default:
