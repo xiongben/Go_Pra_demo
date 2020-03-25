@@ -9,7 +9,12 @@ import (
 	"net"
 )
 
-func ServerProcessLogin(conn net.Conn, mes *message.Message) (err error) {
+type UserProcess struct {
+	Conn   net.Conn
+	UserId int
+}
+
+func (this *UserProcess) ServerProcessLogin(mes *message.Message) (err error) {
 	fmt.Println("========")
 	var loginMes message.LoginMes
 	err = json.Unmarshal([]byte(mes.Data), &loginMes)
@@ -59,14 +64,14 @@ func ServerProcessLogin(conn net.Conn, mes *message.Message) (err error) {
 		return
 	}
 	//发送
-	err = utils.WritePkg(conn, data)
+	err = utils.WritePkg(this.Conn, data)
 	if err != nil {
 		fmt.Println("send to client err = ", err)
 	}
 	return
 }
 
-func ServerProcessRegister(conn net.Conn, mes *message.Message) (err error) {
+func (this *UserProcess) ServerProcessRegister(mes *message.Message) (err error) {
 	var registerMes message.RegisterMes
 	err = json.Unmarshal([]byte(mes.Data), &registerMes)
 	if err != nil {
@@ -104,7 +109,7 @@ func ServerProcessRegister(conn net.Conn, mes *message.Message) (err error) {
 		return
 	}
 	//发送
-	err = utils.WritePkg(conn, data)
+	err = utils.WritePkg(this.Conn, data)
 	if err != nil {
 		fmt.Println("send to client err = ", err)
 	}

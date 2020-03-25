@@ -35,9 +35,11 @@ func ServerProcessMes(conn net.Conn, mes *message.Message) (err error) {
 	switch mes.Type {
 	case message.LoginMesType:
 		//处理登录逻辑
-		err = ServerProcessLogin(conn, mes)
+		up := UserProcess{Conn: conn}
+		err = up.ServerProcessLogin(mes)
 	case message.RegisterMesType:
-		err = ServerProcessRegister(conn, mes)
+		up := UserProcess{Conn: conn}
+		err = up.ServerProcessRegister(mes)
 	//处理注册
 	default:
 		fmt.Println("消息类型不存在，无法处理")
