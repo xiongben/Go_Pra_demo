@@ -72,7 +72,6 @@ func (this *UserProcess) ServerProcessLogin(mes *message.Message) (err error) {
 	//发送
 	tf := &utils.Transfer{
 		Conn: this.Conn,
-		Buf:  [8096]byte{},
 	}
 	err = tf.WritePkg(data)
 	if err != nil {
@@ -121,7 +120,6 @@ func (this *UserProcess) ServerProcessRegister(mes *message.Message) (err error)
 	//发送
 	tf := &utils.Transfer{
 		Conn: this.Conn,
-		Buf:  [8096]byte{},
 	}
 	err = tf.WritePkg(data)
 	if err != nil {

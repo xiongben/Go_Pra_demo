@@ -13,12 +13,11 @@ type Processor struct {
 }
 
 func (this *Processor) Processfn() (err error) {
-	defer this.Conn.Close()
+	//defer this.Conn.Close()
 
 	for {
 		tf := &utils.Transfer{
 			Conn: this.Conn,
-			Buf:  [8096]byte{},
 		}
 		mes, err := tf.Readpkg()
 		if err != nil {

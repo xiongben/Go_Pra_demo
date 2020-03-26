@@ -25,7 +25,7 @@ func main() {
 		}
 		//启动一个协程和客户端保持通信
 		//process.Processfn(conn)
-		processcreat(conn)
+		go processcreat(conn)
 	}
 }
 
@@ -34,6 +34,7 @@ func initUserDao() {
 }
 
 func processcreat(conn net.Conn) {
+	defer conn.Close()
 	processor2 := process.Processor{Conn: conn}
 	err := processor2.Processfn()
 	if err != nil {
