@@ -14,6 +14,46 @@ type UserProcess struct {
 	UserId int
 }
 
+func (this *UserProcess) NotifyOthersOnlineUsers(userId int) {
+	for id, up := range userMgr.onlineUsers {
+		if id == userId {
+			continue
+		}
+		up.NotifyMeToOnlineUsers(userId)
+	}
+}
+
+func (this *UserProcess) NotifyMeToOnlineUsers(userId int) {
+	var mes message.Message
+	mes.Type = message.NotifyUserStatusMesType
+
+	var notifyUserStatusMes message.NotifyUserStatusMes
+	notifyUserStatusMes.UserId = userId
+	notifyUserStatusMes.Status = message.UserOnline
+
+	//序列化
+	data, err := json.Marshal(notifyUserStatusMes)
+	if err != nil {
+		fmt.Println("json.marshal err = ", err)
+		return
+	}
+	mes.Data = string(data)
+	data, err = json.Marshal(mes)
+	if err != nil {
+		fmt.Println("json.marshal err = ", err)
+		return
+	}
+	//发送
+	tf := &utils.Transfer{
+		Conn: this.Conn,
+	}
+	err = tf.WritePkg(data)
+	if err != nil {
+		fmt.Println("send to client err = ", err)
+	}
+	return
+}
+
 func (this *UserProcess) ServerProcessLogin(mes *message.Message) (err error) {
 	fmt.Println("========")
 	var loginMes message.LoginMes
@@ -47,6 +87,7 @@ func (this *UserProcess) ServerProcessLogin(mes *message.Message) (err error) {
 		//把登录成功的用户放到usermgr中
 		this.UserId = loginMes.UserId
 		userMgr.AddOnlineProcess(this)
+		this.NotifyOthersOnlineUsers(loginMes.UserId)
 		for id, _ := range userMgr.onlineUsers {
 			loginResMes.UserIds = append(loginResMes.UserIds, id)
 		}
