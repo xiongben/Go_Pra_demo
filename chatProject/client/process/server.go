@@ -1,6 +1,7 @@
 package process
 
 import (
+	"awesomeProject1/chatProject/common/message"
 	"awesomeProject1/chatProject/utils"
 	"fmt"
 	"net"
@@ -41,6 +42,15 @@ func serverProcessMes(conn net.Conn) {
 			fmt.Println("readpkg error = ", err)
 			return
 		}
-		fmt.Println(mes)
+		//fmt.Println(mes)
+		switch mes.Type {
+		case message.NotifyUserStatusMesType:
+			//处理
+			fmt.Println("5555")
+		default:
+			fmt.Println("服务器返回了未知消息类型")
+
+		}
+
 	}
 }

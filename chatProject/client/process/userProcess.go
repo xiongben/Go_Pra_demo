@@ -2,6 +2,7 @@ package process
 
 import (
 	"awesomeProject1/chatProject/common/message"
+	"awesomeProject1/chatProject/server/model"
 	"awesomeProject1/chatProject/utils"
 	"encoding/binary"
 	"encoding/json"
@@ -77,6 +78,11 @@ func Login(userId int, userPass int) (err error) {
 				continue
 			}
 			fmt.Println("userid: ", v)
+			user := &model.User{
+				UserId:     v,
+				UserStatus: message.UserOnline,
+			}
+			onlineUsers[v] = user
 		}
 		go serverProcessMes(conn)
 		for {
