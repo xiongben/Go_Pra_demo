@@ -3,6 +3,7 @@ package process
 import (
 	"awesomeProject1/chatProject/common/message"
 	"awesomeProject1/chatProject/utils"
+	"encoding/json"
 	"fmt"
 	"net"
 	"os"
@@ -20,7 +21,8 @@ func showMenu() {
 	fmt.Scanf("%d\n", &key)
 	switch key {
 	case 1:
-		fmt.Println("显示在线用户列表")
+		//fmt.Println("显示在线用户列表")
+		outputOnlineUser()
 	case 2:
 		fmt.Println("发送消息")
 	case 3:
@@ -46,6 +48,9 @@ func serverProcessMes(conn net.Conn) {
 		switch mes.Type {
 		case message.NotifyUserStatusMesType:
 			//处理
+			var notifyUserStatusMes message.NotifyUserStatusMes
+			json.Unmarshal([]byte(mes.Data), &notifyUserStatusMes)
+			updateUserStatus(&notifyUserStatusMes)
 			fmt.Println("5555")
 		default:
 			fmt.Println("服务器返回了未知消息类型")
