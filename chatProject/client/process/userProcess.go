@@ -72,6 +72,11 @@ func Login(userId int, userPass int) (err error) {
 
 	if loginResMes.Code == 200 {
 		//fmt.Println("登录成功")
+		//CurUser进行初始化
+		CurUser.Conn = conn
+		CurUser.UserId = userId
+		CurUser.UserStatus = message.UserOnline
+
 		fmt.Println("当前在线用户列表如下：")
 		for _, v := range loginResMes.UserIds {
 			if v == userId {
