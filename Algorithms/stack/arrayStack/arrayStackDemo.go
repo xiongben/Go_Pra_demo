@@ -50,3 +50,14 @@ func (this *ArrayStack) list() (err error) {
 	}
 	return
 }
+
+func TestStack() {
+	stack := &ArrayStack{
+		maxSize: 4,
+		stack:   make([]int, 4),
+		top:     0,
+	}
+	var key string
+	loop := true
+
+}
