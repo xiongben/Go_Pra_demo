@@ -55,9 +55,42 @@ func TestStack() {
 	stack := &ArrayStack{
 		maxSize: 4,
 		stack:   make([]int, 4),
-		top:     0,
+		top:     -1,
 	}
 	var key string
-	loop := true
+	//loop := true
 
+	for {
+		fmt.Println("show: 表示显示栈")
+		fmt.Println("exit: 退出程序")
+		fmt.Println("push: 入栈")
+		fmt.Println("pop: 出栈")
+		fmt.Println("输入你的选择")
+		fmt.Scanf("%v\n", &key)
+		switch key {
+		case "show":
+			stack.list()
+			break
+		case "push":
+			fmt.Println("请输入一个数")
+			var value int
+			fmt.Scanf("%d\n", &value)
+			stack.push(value)
+			break
+		case "pop":
+			res, err := stack.pop()
+			if err != nil {
+				fmt.Println(err)
+			}
+			fmt.Println("出栈的数据是：", res)
+			break
+		case "exit":
+			goto Loop
+			break
+		default:
+			break
+		}
+	}
+Loop:
+	fmt.Println("程序退出~~~~")
 }

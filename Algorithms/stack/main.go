@@ -1,5 +1,7 @@
 package main
 
-func main() {
+import "awesomeProject1/Algorithms/stack/arrayStack"
 
+func main() {
+	arrayStack.TestStack()
 }
