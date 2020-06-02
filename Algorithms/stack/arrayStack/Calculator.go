@@ -7,11 +7,11 @@ import (
 
 type ArrayStack2 struct {
 	maxSize int
-	stack   []int
+	stack   []interface{}
 	top     int
 }
 
-func (this *ArrayStack2) peek() int {
+func (this *ArrayStack2) peek() string {
 	return this.stack[this.top]
 }
 
@@ -32,15 +32,16 @@ func (this *ArrayStack2) push(val int) {
 	this.stack[this.top] = val
 }
 
-func (this *ArrayStack2) pop() (val int, err error) {
+func (this *ArrayStack2) pop() (val int) {
 	if this.isEmpty() {
 		fmt.Println("栈空，没有数据")
-		err = errors.New("stack is null")
+		err := errors.New("stack is null")
+		fmt.Println(err)
 		return
 	}
 	val = this.stack[this.top]
 	this.top--
-	return val, nil
+	return val
 }
 
 func (this *ArrayStack2) list() (err error) {
@@ -55,10 +56,10 @@ func (this *ArrayStack2) list() (err error) {
 	return
 }
 
-func (this *ArrayStack2) priority(oper int) int {
-	if oper == '*' || oper == '/' {
+func (this *ArrayStack2) priority(oper string) int {
+	if oper == "*" || oper == "/" {
 		return 1
-	} else if oper == '+' || oper == '-' {
+	} else if oper == "+" || oper == "-" {
 		return 0
 	} else {
 		return -1
@@ -109,4 +110,19 @@ func Calculate() {
 	res := 0
 	ch := " "
 	keepNum := "" //用于拼接多位数
+
+	for {
+		ch := expression[index : index+1]
+		if operStack.isoper(ch) {
+			if operStack.priority(ch) <= operStack.priority(operStack.peek()) {
+				num1 = numStack.pop()
+				num2 = numStack.pop()
+				oper = operStack.pop()
+				res = numStack.cal(num1, num2, oper)
+			}
+		}
+	}
+	//str := "abcdefg"
+	//str1 := str[0:1]
+	//fmt.Println(str1)
 }
