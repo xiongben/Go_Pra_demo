@@ -9,9 +9,10 @@ import (
 func TestBubbleSort() {
 	r := rand.New(rand.NewSource(time.Now().UnixNano()))
 
-	arr1 := make([]int, 10)
+	var arr1 []int = []int{}
 	for i := 0; i < 10; i++ {
-		arr1[i] = r.Intn(100)
+		arr1 = append(arr1, r.Intn(100))
+		//arr1[i] = r.Intn(100)
 	}
 	fmt.Println(arr1)
 	Bubblesort(arr1)
