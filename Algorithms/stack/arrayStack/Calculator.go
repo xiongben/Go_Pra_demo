@@ -7,11 +7,11 @@ import (
 
 type ArrayStack2 struct {
 	maxSize int
-	stack   []interface{}
+	stack   []int
 	top     int
 }
 
-func (this *ArrayStack2) peek() string {
+func (this *ArrayStack2) peek() int {
 	return this.stack[this.top]
 }
 
