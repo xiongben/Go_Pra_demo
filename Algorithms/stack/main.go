@@ -18,5 +18,6 @@ func main() {
 	//}
 	//fmt.Println(user1)
 
-	sort.TestBubbleSort()
+	//sort.TestBubbleSort()
+	sort.TestInsertSort()
 }
