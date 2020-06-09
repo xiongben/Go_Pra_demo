@@ -6,7 +6,20 @@ import (
 )
 
 func ArrayQueueDemo() {
-
+	arrayQueue1 := arrayQueue{
+		maxSize: 3,
+		front:   -1,
+		rear:    -1,
+		arr:     make([]int, 3),
+	}
+	key := ""
+	for {
+		fmt.Println("s,show:显示队列")
+		fmt.Println("e,exit:退出程序")
+		fmt.Println("a,add:添加数据到队列")
+		fmt.Println("g,get:从队列中取出数据")
+		fmt.Println("h,head:查看队列头的数据")
+	}
 }
 
 type arrayQueue struct {
