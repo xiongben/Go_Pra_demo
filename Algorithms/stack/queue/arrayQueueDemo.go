@@ -12,14 +12,47 @@ func ArrayQueueDemo() {
 		rear:    -1,
 		arr:     make([]int, 3),
 	}
-	key := ""
+	var key string
 	for {
 		fmt.Println("s,show:显示队列")
 		fmt.Println("e,exit:退出程序")
 		fmt.Println("a,add:添加数据到队列")
 		fmt.Println("g,get:从队列中取出数据")
 		fmt.Println("h,head:查看队列头的数据")
+		fmt.Scanf("%v\n", &key)
+		switch key {
+		case "s":
+			arrayQueue1.showQueue()
+			break
+		case "a":
+			fmt.Println("请输入一个数")
+			var val int
+			fmt.Scanf("%v\n", &val)
+			arrayQueue1.addQueue(val)
+			break
+		case "g":
+			res, err := arrayQueue1.getQueue()
+			if err != nil {
+				fmt.Println(err)
+			}
+			fmt.Println("取出的数据是：", res)
+			break
+		case "h":
+			res, err := arrayQueue1.headQueue()
+			if err != nil {
+				fmt.Println(err)
+			}
+			fmt.Println("队列头部的数据是：", res)
+			break
+		case "e":
+			goto Loop
+			break
+		default:
+			break
+		}
 	}
+Loop:
+	fmt.Println("程序退出~~~~")
 }
 
 type arrayQueue struct {
@@ -46,12 +79,13 @@ func (this *arrayQueue) addQueue(n int) {
 	this.arr[this.rear] = n
 }
 
-func (this *arrayQueue) getQueue() int {
+func (this *arrayQueue) getQueue() (val int, err error) {
 	if this.isEmpty() {
-		errors.New("队列为空，没有数据")
+		err = errors.New("队列为空，没有数据")
 	}
 	this.front++
-	return this.arr[this.front]
+	val = this.arr[this.front]
+	return val, err
 }
 
 func (this *arrayQueue) showQueue() {
@@ -64,9 +98,10 @@ func (this *arrayQueue) showQueue() {
 	}
 }
 
-func (this *arrayQueue) headQueue() int {
+func (this *arrayQueue) headQueue() (res int, err error) {
 	if this.isEmpty() {
-		errors.New("队列为空，没有数据")
+		err = errors.New("队列为空，没有数据")
 	}
-	return this.arr[this.front+1]
+	res = this.arr[this.front+1]
+	return res, err
 }

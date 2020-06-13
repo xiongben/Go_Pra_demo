@@ -1,6 +1,6 @@
 package main
 
-import "awesomeProject1/Algorithms/stack/sort"
+import "awesomeProject1/Algorithms/stack/queue"
 
 type user struct {
 	arr []interface{}
@@ -19,5 +19,7 @@ func main() {
 	//fmt.Println(user1)
 
 	//sort.TestBubbleSort()
-	sort.TestInsertSort()
+	//sort.TestInsertSort()
+
+	queue.ArrayQueueDemo()
 }
