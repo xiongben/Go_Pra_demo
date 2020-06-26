@@ -63,7 +63,7 @@ type circleArrayQueue struct {
 }
 
 func (this *circleArrayQueue) isFull() bool {
-	return this.rear == this.maxSize-1
+	return (this.rear+1)%this.maxSize == this.front
 }
 
 func (this *circleArrayQueue) isEmpty() bool {
@@ -75,16 +75,18 @@ func (this *circleArrayQueue) addQueue(n int) {
 		fmt.Println("队列满，不能加入数据")
 		return
 	}
-	this.rear++
+	this.rear = (this.rear + 1) % this.maxSize
 	this.arr[this.rear] = n
+
 }
 
 func (this *circleArrayQueue) getQueue() (val int, err error) {
 	if this.isEmpty() {
 		err = errors.New("队列为空，没有数据")
 	}
-	this.front++
+	this.front = (this.front + 1) % this.maxSize
 	val = this.arr[this.front]
+
 	return val, err
 }
 
@@ -102,6 +104,10 @@ func (this *circleArrayQueue) headQueue() (res int, err error) {
 	if this.isEmpty() {
 		err = errors.New("队列为空，没有数据")
 	}
-	res = this.arr[this.front+1]
+	res = this.arr[this.front]
 	return res, err
+}
+
+func (this *circleArrayQueue) size() (res int) {
+	return (this.rear + this.maxSize - this.front) % this.maxSize
 }

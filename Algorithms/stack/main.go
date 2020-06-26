@@ -21,5 +21,6 @@ func main() {
 	//sort.TestBubbleSort()
 	//sort.TestInsertSort()
 
-	queue.ArrayQueueDemo()
+	//queue.ArrayQueueDemo()
+	queue.CircleArrayQueueDemo()
 }
