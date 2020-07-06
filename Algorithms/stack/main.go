@@ -1,6 +1,6 @@
 package main
 
-import "awesomeProject1/Algorithms/stack/queue"
+import "awesomeProject1/Algorithms/linkedlist"
 
 type user struct {
 	arr []interface{}
@@ -22,5 +22,7 @@ func main() {
 	//sort.TestInsertSort()
 
 	//queue.ArrayQueueDemo()
-	queue.CircleArrayQueueDemo()
+	//queue.CircleArrayQueueDemo()
+
+	linkedlist.SingleLinkedListTestDemo()
 }
