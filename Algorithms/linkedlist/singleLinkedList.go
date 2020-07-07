@@ -30,6 +30,18 @@ func SingleLinkedListTestDemo() {
 		nickname: "晓组织首领",
 		next:     nil,
 	}
+	hero8 := HeroNode{
+		no:       8,
+		name:     "凯",
+		nickname: "木叶旋风",
+		next:     nil,
+	}
+	hero12 := HeroNode{
+		no:       12,
+		name:     "大蛇丸",
+		nickname: "科研大佬",
+		next:     nil,
+	}
 	singleLinkedList := SingleLinkedList{}
 	singleLinkedList.head = &HeroNode{
 		no:       0,
@@ -41,13 +53,26 @@ func SingleLinkedListTestDemo() {
 	singleLinkedList.add(&hero2)
 	singleLinkedList.add(&hero3)
 	singleLinkedList.add(&hero4)
+	singleLinkedList.add(&hero8)
+	singleLinkedList.add(&hero12)
 
 	singleLinkedList.list()
 
+	fmt.Println("===========")
+	singleLinkedList.del(1)
+	singleLinkedList.list()
+
+	//fmt.Println("===========")
+	//singleLinkedList.addByOrder(&hero8)
+	//singleLinkedList.list()
 }
 
 type SingleLinkedList struct {
 	head *HeroNode
+}
+
+func (this *SingleLinkedList) getHead() *HeroNode {
+	return this.head
 }
 
 func (this *SingleLinkedList) add(heronode *HeroNode) {
@@ -60,6 +85,77 @@ func (this *SingleLinkedList) add(heronode *HeroNode) {
 	}
 Loop:
 	temp.next = heronode
+}
+
+func (this *SingleLinkedList) addByOrder(heroNode *HeroNode) {
+	temp := this.head
+	flag := false
+	for {
+		if temp.next == nil {
+			goto Loop
+		}
+		if temp.next.no > heroNode.no {
+			goto Loop
+		} else if temp.next.no == heroNode.no {
+			flag = true
+			goto Loop
+		}
+		temp = temp.next
+	}
+Loop:
+	if flag {
+		fmt.Println("准备插入的编号已经存在，不能加入")
+	} else {
+		heroNode.next = temp.next
+		temp.next = heroNode
+	}
+}
+
+func (this *SingleLinkedList) update(newHeroNode *HeroNode) {
+	if this.head.next == nil {
+		fmt.Println("链表为空！")
+		return
+	}
+	temp := this.head.next
+	flag := false
+	for {
+		if temp == nil {
+			goto Loop
+		}
+		if temp.no == newHeroNode.no {
+			flag = true
+			goto Loop
+		}
+		temp = temp.next
+	}
+Loop:
+	if flag {
+		temp.name = newHeroNode.name
+		temp.nickname = newHeroNode.nickname
+	} else {
+		fmt.Printf("没有找到编号%v的结果，不能修改\n", newHeroNode.no)
+	}
+}
+
+func (this *SingleLinkedList) del(no int) {
+	temp := this.head
+	flag := false
+	for {
+		if temp == nil {
+			goto Loop
+		}
+		if temp.next.no == no {
+			flag = true
+			goto Loop
+		}
+		temp = temp.next
+	}
+Loop:
+	if flag {
+		temp.next = temp.next.next
+	} else {
+		fmt.Printf("没有找到编号%v的结点，不能删除\n", no)
+	}
 }
 
 func (this *SingleLinkedList) list() {
