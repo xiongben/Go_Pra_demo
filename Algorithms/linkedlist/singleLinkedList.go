@@ -57,14 +57,42 @@ func SingleLinkedListTestDemo() {
 	singleLinkedList.add(&hero12)
 
 	singleLinkedList.list()
-
-	fmt.Println("===========")
-	singleLinkedList.del(1)
+	fmt.Println("=============")
+	reverseList(singleLinkedList.head)
 	singleLinkedList.list()
+	//fmt.Println("===========")
+	//singleLinkedList.del(1)
+	//singleLinkedList.list()
 
 	//fmt.Println("===========")
 	//singleLinkedList.addByOrder(&hero8)
 	//singleLinkedList.list()
+}
+
+//反转单链表
+func reverseList(head *HeroNode) {
+	if head.next == nil || head.next.next == nil {
+		return
+	}
+	cur := head.next
+	var next *HeroNode
+	reverseHead := HeroNode{
+		no:       0,
+		name:     "",
+		nickname: "",
+		next:     nil,
+	}
+	for {
+		if cur == nil {
+			goto Loop
+		}
+		next = cur.next
+		cur.next = reverseHead.next
+		reverseHead.next = cur
+		cur = next
+	}
+Loop:
+	head.next = reverseHead.next
 }
 
 type SingleLinkedList struct {
