@@ -24,5 +24,6 @@ func main() {
 	//queue.ArrayQueueDemo()
 	//queue.CircleArrayQueueDemo()
 
-	linkedlist.SingleLinkedListTestDemo()
+	//linkedlist.SingleLinkedListTestDemo()
+	linkedlist.DoubleLinkedListTestDemo()
 }
