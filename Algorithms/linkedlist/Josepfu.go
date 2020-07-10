@@ -30,10 +30,22 @@ func (this *CircleSingleLinkedList) addBoy(nums int) {
 }
 
 func (this *CircleSingleLinkedList) showBoy() {
-
+	if this.first == nil {
+		fmt.Println("没有任何小孩")
+		return
+	}
+	curBoy := this.first
+	for {
+		fmt.Printf("小孩的编号是%v \n", curBoy.getNo())
+		if curBoy.getNext() == this.first {
+			goto Loop
+		}
+		curBoy = curBoy.getNext()
+	}
+Loop:
 }
 
-func (this *CircleSingleLinkedList) countBoy() {
+func (this *CircleSingleLinkedList) countBoy(startNo int, countNum int, nums int) {
 
 }
 
