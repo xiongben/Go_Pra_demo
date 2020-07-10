@@ -2,6 +2,13 @@ package linkedlist
 
 import "fmt"
 
+func JosefuDemo() {
+	circleSingleLinkedList := CircleSingleLinkedList{}
+	circleSingleLinkedList.addBoy(6)
+	circleSingleLinkedList.showBoy()
+	circleSingleLinkedList.countBoy(1, 3, 6)
+}
+
 type CircleSingleLinkedList struct {
 	first *Boy
 }
@@ -46,6 +53,36 @@ Loop:
 }
 
 func (this *CircleSingleLinkedList) countBoy(startNo int, countNum int, nums int) {
+	if this.first == nil || startNo < 1 || startNo > nums {
+		fmt.Println("输入的参数有误")
+		return
+	}
+	helper := this.first
+	for {
+		if helper.getNext() == this.first {
+			goto Loop1
+		}
+		helper = helper.getNext()
+	}
+Loop1:
+	for i := 0; i < startNo-1; i++ {
+		this.first = this.first.getNext()
+		helper = helper.getNext()
+	}
+	for {
+		if helper == this.first {
+			goto Loop2
+		}
+		for j := 0; j < countNum; j++ {
+			this.first = this.first.getNext()
+			helper = helper.getNext()
+		}
+		fmt.Printf("小孩%v出圈\n", this.first.getNo())
+		this.first = this.first.getNext()
+		helper.setNext(this.first)
+	}
+Loop2:
+	fmt.Printf("the last child number is %v \n", this.first.getNo())
 
 }
 
