@@ -1,6 +1,6 @@
 package main
 
-import "awesomeProject1/Algorithms/linkedlist"
+import "awesomeProject1/Algorithms/stack/sort"
 
 type user struct {
 	arr []interface{}
@@ -26,5 +26,6 @@ func main() {
 
 	//linkedlist.SingleLinkedListTestDemo()
 	//linkedlist.DoubleLinkedListTestDemo()
-	linkedlist.JosefuDemo()
+	//linkedlist.JosefuDemo()
+	sort.TestBubbleSort()
 }
