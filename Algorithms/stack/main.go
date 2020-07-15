@@ -27,5 +27,6 @@ func main() {
 	//linkedlist.SingleLinkedListTestDemo()
 	//linkedlist.DoubleLinkedListTestDemo()
 	//linkedlist.JosefuDemo()
-	sort.TestBubbleSort()
+	//sort.TestBubbleSort()
+	sort.QuickSortDemo()
 }
