@@ -1,6 +1,11 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"reflect"
+	"sort"
+	"unsafe"
+)
 
 func main() {
 	//数组
@@ -18,8 +23,40 @@ func main() {
 	//	fmt.Println("HHH")
 	//}
 
-	var str1 = "hello"
-	for i, _ := range str1 {
-		fmt.Println(i, str1[:i], str1[i:])
+	//var str1 = "hello"
+	//for i, _ := range str1 {
+	//	fmt.Println(i, str1[:i], str1[i:])
+	//}
+
+	//fmt.Println(1<<20)
+
+	n := Num{
+		i: "aaaaa",
+		j: 100,
 	}
+	nPoint := unsafe.Pointer(&n)
+	niPoint := (*string)(unsafe.Pointer(nPoint))
+	*niPoint = "kakaxi"
+	njPoint := (*int64)(unsafe.Pointer(uintptr(nPoint) + unsafe.Offsetof(n.j)))
+	*njPoint = 222
+	fmt.Printf("n.i: %s,n.j: %d", n.i, n.j)
+
+}
+
+type Num struct {
+	i string
+	j int64
+}
+
+func SortFloat64FastV1(a []float64) {
+	var b []int = ((*[1 << 20]int)(unsafe.Pointer(&a[0])))[:len(a):cap(a)]
+	sort.Ints(b)
+}
+
+func SortFloat64FastV2(a []float64) {
+	var b []int
+	aHdr := (*reflect.SliceHeader)(unsafe.Pointer(&a))
+	bHdr := (*reflect.SliceHeader)(unsafe.Pointer(&b))
+	*bHdr = *aHdr
+	sort.Ints(b)
 }
