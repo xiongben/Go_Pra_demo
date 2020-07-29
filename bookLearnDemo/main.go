@@ -40,6 +40,13 @@ func main() {
 	njPoint := (*int64)(unsafe.Pointer(uintptr(nPoint) + unsafe.Offsetof(n.j)))
 	*njPoint = 222
 	fmt.Printf("n.i: %s,n.j: %d", n.i, n.j)
+	fmt.Println("\n====\n")
+	b1 := fn1(1, 2, 3, 4, 5, 6, 7)
+	fmt.Println("b1: ", b1)
+
+	b2 := []interface{}{123, "abc"}
+	fn2(b2...)
+	fn2(b2)
 
 }
 
@@ -59,4 +66,16 @@ func SortFloat64FastV2(a []float64) {
 	bHdr := (*reflect.SliceHeader)(unsafe.Pointer(&b))
 	*bHdr = *aHdr
 	sort.Ints(b)
+}
+
+func fn1(a int, more ...int) int {
+	for _, v := range more {
+		a += v
+	}
+	return a
+}
+
+func fn2(a ...interface{}) {
+	fmt.Println(a...)
+	fmt.Print("\n")
 }
