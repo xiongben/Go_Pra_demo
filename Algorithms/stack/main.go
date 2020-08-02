@@ -1,6 +1,6 @@
 package main
 
-import "awesomeProject1/Algorithms/stack/sort"
+import "awesomeProject1/Algorithms/stack/recursion"
 
 type user struct {
 	arr []interface{}
@@ -28,5 +28,6 @@ func main() {
 	//linkedlist.DoubleLinkedListTestDemo()
 	//linkedlist.JosefuDemo()
 	//sort.TestBubbleSort()
-	sort.QuickSortDemo()
+	//sort.QuickSortDemo()
+	recursion.MigongDemo()
 }
