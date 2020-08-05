@@ -31,5 +31,6 @@ func main() {
 	//sort.QuickSortDemo()
 	//recursion.MigongDemo()
 	//recursion.Queue8Demo()
-	sort.SelectSortDemo()
+	//sort.SelectSortDemo()
+	sort.InsertSortDemo()
 }
