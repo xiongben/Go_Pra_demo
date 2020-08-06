@@ -32,5 +32,6 @@ func main() {
 	//recursion.MigongDemo()
 	//recursion.Queue8Demo()
 	//sort.SelectSortDemo()
-	sort.InsertSortDemo()
+	//sort.InsertSortDemo()
+	sort.ShellSortDemo()
 }
