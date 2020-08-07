@@ -1,6 +1,6 @@
 package main
 
-import "awesomeProject1/Algorithms/sort"
+import "awesomeProject1/Algorithms/tree"
 
 type user struct {
 	arr []interface{}
@@ -33,5 +33,6 @@ func main() {
 	//recursion.Queue8Demo()
 	//sort.SelectSortDemo()
 	//sort.InsertSortDemo()
-	sort.ShellSortDemo()
+	//sort.ShellSortDemo()
+	tree.BinaryTreeDemo()
 }
