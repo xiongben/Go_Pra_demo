@@ -34,5 +34,7 @@ func main() {
 	//sort.SelectSortDemo()
 	//sort.InsertSortDemo()
 	//sort.ShellSortDemo()
-	tree.BinaryTreeDemo()
+	//tree.BinaryTreeDemo()
+	//tree.ArrBinaryTreeDemo()
+	tree.ThreadeBinaryTreeDemo()
 }

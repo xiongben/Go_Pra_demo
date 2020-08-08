@@ -92,10 +92,12 @@ func (this *BinaryTree) preOrderSearch(no int) *HeroNode {
 }
 
 type HeroNode struct {
-	No    int
-	Name  string
-	Left  *HeroNode
-	Right *HeroNode
+	No        int
+	Name      string
+	Left      *HeroNode
+	Right     *HeroNode
+	leftType  int //0为左子树，1为前驱节点
+	rightType int //0为右子树，1为后驱节点
 }
 
 func (this *HeroNode) String() string {
