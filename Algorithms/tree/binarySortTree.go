@@ -91,17 +91,27 @@ func (this *BinarySortTree) delNode(val int) {
 			targetNode.value = minval
 		} else { //删除只有一颗子树的节点
 			if targetNode.left != nil {
-				if parent.left.value == val {
-					parent.left = targetNode.left
+				if parent != nil {
+					if parent.left.value == val {
+						parent.left = targetNode.left
+					} else {
+						parent.right = targetNode.left
+					}
 				} else {
-					parent.right = targetNode.left
+					this.root = targetNode.left
 				}
+
 			} else {
-				if parent.left.value == val {
-					parent.left = targetNode.right
+				if parent != nil {
+					if parent.left.value == val {
+						parent.left = targetNode.right
+					} else {
+						parent.right = targetNode.right
+					}
 				} else {
-					parent.right = targetNode.right
+					this.root = targetNode.right
 				}
+
 			}
 
 		}
