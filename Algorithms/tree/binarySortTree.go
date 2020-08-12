@@ -35,6 +35,51 @@ func (this *BinarySortTree) infixOrder() {
 	}
 }
 
+func (this *BinarySortTree) search(val int) *Node {
+	if this.root == nil {
+		return nil
+	} else {
+		return this.root.search(val)
+	}
+}
+
+func (this *BinarySortTree) searchParent(val int) *Node {
+	if this.root == nil {
+		return nil
+	} else {
+		return this.root.searchParent(val)
+	}
+}
+
+func (this *BinarySortTree) delNode(val int) {
+	if this.root == nil {
+		return
+	} else {
+		targetNode := this.search(val)
+		if targetNode == nil {
+			return
+		}
+		if this.root.left == nil && this.root.right == nil {
+			this.root = nil
+			return
+		}
+		parent := this.searchParent(val)
+		//要删除的节点是叶子节点
+		if targetNode.left == nil && targetNode.right == nil {
+			//判断目标节点是左节点还是右节点
+			if parent.left != nil && parent.left.value == val {
+				parent.left = nil
+			} else if parent.right != nil && parent.right.value == val {
+				parent.right = nil
+			}
+		} else if targetNode.left != nil && targetNode.right != nil {
+
+		} else { //删除只有一颗子树的节点
+
+		}
+	}
+}
+
 type Node struct {
 	value int
 	left  *Node
@@ -72,4 +117,34 @@ func (this *Node) infixOrder() {
 
 func (this *Node) String() string {
 	return "Node [ no=" + strconv.Itoa(this.value) + " ]"
+}
+
+func (this *Node) search(val int) *Node {
+	if this.value == val {
+		return this
+	} else if val < this.value {
+		if this.left == nil {
+			return nil
+		}
+		return this.left.search(val)
+	} else {
+		if this.right == nil {
+			return nil
+		}
+		return this.right.search(val)
+	}
+}
+
+func (this *Node) searchParent(val int) *Node {
+	if (this.left != nil && this.left.value == val) || (this.right != nil && this.right.value == val) {
+		return this
+	} else {
+		if val < this.value && this.left != nil {
+			return this.left.searchParent(val)
+		} else if val >= this.value && this.right != nil {
+			return this.right.searchParent(val)
+		} else {
+			return nil
+		}
+	}
 }
