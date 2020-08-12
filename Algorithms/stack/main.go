@@ -37,5 +37,6 @@ func main() {
 	//tree.BinaryTreeDemo()
 	//tree.ArrBinaryTreeDemo()
 	//tree.ThreadeBinaryTreeDemo()
-	tree.HeapSortDemo()
+	//tree.HeapSortDemo()
+	tree.BinarySortTreeDemo()
 }
