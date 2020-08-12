@@ -13,6 +13,9 @@ func BinarySortTreeDemo() {
 		binarySortTree1.add(&node)
 	}
 	binarySortTree1.infixOrder()
+	fmt.Println("===========")
+	binarySortTree1.delNode(7)
+	binarySortTree1.infixOrder()
 }
 
 type BinarySortTree struct {
@@ -41,6 +44,17 @@ func (this *BinarySortTree) search(val int) *Node {
 	} else {
 		return this.root.search(val)
 	}
+}
+
+//返回以node为根节点的二叉排序树的最小节点的值
+//删除找到的最小节点
+func (this *BinarySortTree) delRightTreeMin(node *Node) int {
+	target := node
+	for target.left != nil {
+		target = target.left
+	}
+	this.delNode(target.value)
+	return target.value
 }
 
 func (this *BinarySortTree) searchParent(val int) *Node {
@@ -73,8 +87,22 @@ func (this *BinarySortTree) delNode(val int) {
 				parent.right = nil
 			}
 		} else if targetNode.left != nil && targetNode.right != nil {
-
+			minval := this.delRightTreeMin(targetNode.right)
+			targetNode.value = minval
 		} else { //删除只有一颗子树的节点
+			if targetNode.left != nil {
+				if parent.left.value == val {
+					parent.left = targetNode.left
+				} else {
+					parent.right = targetNode.left
+				}
+			} else {
+				if parent.left.value == val {
+					parent.left = targetNode.right
+				} else {
+					parent.right = targetNode.right
+				}
+			}
 
 		}
 	}
