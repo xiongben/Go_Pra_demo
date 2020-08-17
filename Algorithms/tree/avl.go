@@ -6,7 +6,115 @@ import (
 )
 
 func AvlDemo() {
+	arr1 := []int{4, 3, 6, 5, 7, 8}
+	avlTree1 := AVLTree{root: nil}
+	for _, v := range arr1 {
+		node := Node2{value: v}
+		avlTree1.add(&node)
+	}
+	avlTree1.infixOrder()
+	fmt.Println(avlTree1.root.height())
+	fmt.Println(avlTree1.root.leftHeight(), avlTree1.root.rightHeight())
+}
 
+type AVLTree struct {
+	root *Node2
+}
+
+func (this *AVLTree) add(node *Node2) {
+	if this.root == nil {
+		this.root = node
+	} else {
+		this.root.add(node)
+	}
+}
+
+func (this *AVLTree) infixOrder() {
+	if this.root != nil {
+		this.root.infixOrder()
+	} else {
+		fmt.Println("The tree is null,can't traverse")
+	}
+}
+
+func (this *AVLTree) search(val int) *Node2 {
+	if this.root == nil {
+		return nil
+	} else {
+		return this.root.search(val)
+	}
+}
+
+//返回以node为根节点的二叉排序树的最小节点的值
+//删除找到的最小节点
+func (this *AVLTree) delRightTreeMin(node *Node2) int {
+	target := node
+	for target.left != nil {
+		target = target.left
+	}
+	this.delNode(target.value)
+	return target.value
+}
+
+func (this *AVLTree) searchParent(val int) *Node2 {
+	if this.root == nil {
+		return nil
+	} else {
+		return this.root.searchParent(val)
+	}
+}
+
+func (this *AVLTree) delNode(val int) {
+	if this.root == nil {
+		return
+	} else {
+		targetNode := this.search(val)
+		if targetNode == nil {
+			return
+		}
+		if this.root.left == nil && this.root.right == nil {
+			this.root = nil
+			return
+		}
+		parent := this.searchParent(val)
+		//要删除的节点是叶子节点
+		if targetNode.left == nil && targetNode.right == nil {
+			//判断目标节点是左节点还是右节点
+			if parent.left != nil && parent.left.value == val {
+				parent.left = nil
+			} else if parent.right != nil && parent.right.value == val {
+				parent.right = nil
+			}
+		} else if targetNode.left != nil && targetNode.right != nil {
+			minval := this.delRightTreeMin(targetNode.right)
+			targetNode.value = minval
+		} else { //删除只有一颗子树的节点
+			if targetNode.left != nil {
+				if parent != nil {
+					if parent.left.value == val {
+						parent.left = targetNode.left
+					} else {
+						parent.right = targetNode.left
+					}
+				} else {
+					this.root = targetNode.left
+				}
+
+			} else {
+				if parent != nil {
+					if parent.left.value == val {
+						parent.left = targetNode.right
+					} else {
+						parent.right = targetNode.right
+					}
+				} else {
+					this.root = targetNode.right
+				}
+
+			}
+
+		}
+	}
 }
 
 type Node2 struct {
@@ -48,6 +156,22 @@ func (this *Node2) String() string {
 	return "Node [ no=" + strconv.Itoa(this.value) + " ]"
 }
 
+//返回左子树的高度
+func (this *Node2) leftHeight() int {
+	if this.left == nil {
+		return 0
+	}
+	return this.left.height()
+}
+
+//返回右子树高度
+func (this *Node2) rightHeight() int {
+	if this.right == nil {
+		return 0
+	}
+	return this.right.height()
+}
+
 //返回以该节点为根节点的树的高度
 func (this *Node2) height() int {
 	var leftheight int
@@ -62,7 +186,7 @@ func (this *Node2) height() int {
 	} else {
 		rightheight = this.right.height()
 	}
-	return getmax(leftheight, rightheight)
+	return getmax(leftheight, rightheight) + 1
 
 }
 
