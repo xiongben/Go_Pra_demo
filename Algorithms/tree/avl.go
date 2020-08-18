@@ -140,6 +140,9 @@ func (this *Node2) add(node *Node2) {
 			this.right.add(node)
 		}
 	}
+	if this.rightHeight()-this.leftHeight() > 1 {
+		this.leftRotate()
+	}
 }
 
 func (this *Node2) infixOrder() {
@@ -188,6 +191,16 @@ func (this *Node2) height() int {
 	}
 	return getmax(leftheight, rightheight) + 1
 
+}
+
+//左旋转方法
+func (this *Node2) leftRotate() {
+	newNode := Node2{value: this.value}
+	newNode.left = this.left
+	newNode.right = this.right.left
+	this.value = this.right.value
+	this.right = this.right.right
+	this.left = &newNode
 }
 
 func (this *Node2) search(val int) *Node2 {
