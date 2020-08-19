@@ -6,7 +6,9 @@ import (
 )
 
 func AvlDemo() {
-	arr1 := []int{4, 3, 6, 5, 7, 8}
+	//arr1 := []int{4, 3, 6, 5, 7, 8}
+	//arr1 := []int{10,12,8,9,7,6}
+	arr1 := []int{10, 11, 7, 6, 8, 9}
 	avlTree1 := AVLTree{root: nil}
 	for _, v := range arr1 {
 		node := Node2{value: v}
@@ -141,7 +143,23 @@ func (this *Node2) add(node *Node2) {
 		}
 	}
 	if this.rightHeight()-this.leftHeight() > 1 {
-		this.leftRotate()
+		//如果它的右子树的左子树高度大于它的右子树的右子树高度
+		if this.right.leftHeight() > this.right.rightHeight() && this.right != nil {
+			this.right.rightRotate()
+			this.leftRotate()
+		} else {
+			this.leftRotate()
+		}
+		return //重要
+	}
+	if this.leftHeight()-this.rightHeight() > 1 {
+		//如果它的左子树的右子树高度大于它的左子树的高度
+		if this.left != nil && this.left.rightHeight() > this.left.leftHeight() {
+			this.left.leftRotate()
+			this.rightRotate()
+		} else {
+			this.rightRotate()
+		}
 	}
 }
 
@@ -201,6 +219,16 @@ func (this *Node2) leftRotate() {
 	this.value = this.right.value
 	this.right = this.right.right
 	this.left = &newNode
+}
+
+//右旋转方法
+func (this *Node2) rightRotate() {
+	newNode := Node2{value: this.value}
+	newNode.right = this.right
+	newNode.left = this.left.right
+	this.value = this.left.value
+	this.left = this.left.left
+	this.right = &newNode
 }
 
 func (this *Node2) search(val int) *Node2 {
