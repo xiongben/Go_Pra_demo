@@ -13,8 +13,10 @@ func GraphDemo() {
 	graph1.insertEdge(1, 4, 1)
 	graph1.showGraph()
 	//graph1.dfs2()
-	graph1.isVisited[0] = true
-	graph1.dfs3(0)
+	//graph1.isVisited[0] = true
+	//graph1.dfs3(0)
+	graph1.bfs(0)
+	fmt.Println(graph1.que)
 }
 
 type Graph struct {
@@ -23,6 +25,7 @@ type Graph struct {
 	edges      [][]int
 	numOfEdges int
 	sum        int
+	que        []int
 }
 
 func (this *Graph) showGraph() {
@@ -82,6 +85,30 @@ func (this *Graph) dfs3(i int) {
 			this.dfs3(j)
 		}
 	}
+}
+
+func (this *Graph) bfs(index int) {
+	head := 0
+	tail := 0
+	this.que = make([]int, len(this.vertexList))
+	this.que[tail] = index
+	tail++
+	this.isVisited[index] = true
+	for head < tail && tail < len(this.vertexList) {
+		cur := this.que[head]
+		for i := range this.vertexList {
+			if this.edges[cur][i] > 0 && !this.isVisited[i] {
+				this.que[tail] = i
+				tail++
+				this.isVisited[i] = true
+			}
+			if tail > len(this.vertexList) {
+				goto Loop
+			}
+		}
+		head++
+	}
+Loop:
 }
 
 func (this *Graph) newGraph(n int) {
