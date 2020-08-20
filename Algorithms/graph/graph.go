@@ -12,7 +12,9 @@ func GraphDemo() {
 	graph1.insertEdge(1, 3, 1)
 	graph1.insertEdge(1, 4, 1)
 	graph1.showGraph()
-	graph1.dfs2()
+	//graph1.dfs2()
+	graph1.isVisited[0] = true
+	graph1.dfs3(0)
 }
 
 type Graph struct {
@@ -64,6 +66,20 @@ func (this *Graph) dfs2() {
 	for i := range this.vertexList {
 		if !this.isVisited[i] {
 			this.dfs(this.isVisited, i)
+		}
+	}
+}
+
+func (this *Graph) dfs3(i int) {
+	fmt.Printf("%v -> ", this.vertexList[i])
+	this.sum++
+	if this.sum >= len(this.vertexList) {
+		return
+	}
+	for j := range this.vertexList {
+		if this.edges[i][j] > 0 && !this.isVisited[j] {
+			this.isVisited[j] = true
+			this.dfs3(j)
 		}
 	}
 }
