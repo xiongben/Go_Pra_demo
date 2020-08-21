@@ -1,6 +1,6 @@
 package main
 
-import "awesomeProject1/Algorithms/graph"
+import "awesomeProject1/Algorithms/method"
 
 type user struct {
 	arr []interface{}
@@ -40,5 +40,6 @@ func main() {
 	//tree.HeapSortDemo()
 	//tree.BinarySortTreeDemo()
 	//tree.AvlDemo()
-	graph.GraphDemo()
+	//graph.GraphDemo()
+	method.BinarySearchDemo()
 }
