@@ -1,11 +1,14 @@
 package main
 
 import (
+	"bytes"
 	"fmt"
-	"math/rand"
 )
 
 func main() {
-	fmt.Print("test")
-	fmt.Println("  My favorite number is", rand.Intn(10))
+	var buffer bytes.Buffer
+	buffer.WriteString("hello")
+	buffer.WriteString(" world")
+	a := buffer.String()
+	fmt.Println(a)
 }
