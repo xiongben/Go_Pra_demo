@@ -36,6 +36,9 @@ func DynamicPackageDemo() {
 		}
 		fmt.Println()
 	}
+
+	fmt.Println("============")
+
 }
 
 func getmax(a int, b int) int {

@@ -41,5 +41,6 @@ func main() {
 	//tree.BinarySortTreeDemo()
 	//tree.AvlDemo()
 	//graph.GraphDemo()
-	method.BinarySearchDemo()
+	//method.BinarySearchDemo()
+	method.KMPDemo()
 }
