@@ -42,5 +42,6 @@ func main() {
 	//tree.AvlDemo()
 	//graph.GraphDemo()
 	//method.BinarySearchDemo()
-	method.KMPDemo()
+	//method.KMPDemo()
+	method.GreedyDemo()
 }
