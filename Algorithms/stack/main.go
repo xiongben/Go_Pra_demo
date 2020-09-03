@@ -43,5 +43,6 @@ func main() {
 	//graph.GraphDemo()
 	//method.BinarySearchDemo()
 	//method.KMPDemo()
-	method.GreedyDemo()
+	//method.GreedyDemo()
+	method.PrimAlgorithmDemo()
 }
