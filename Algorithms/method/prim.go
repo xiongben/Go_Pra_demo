@@ -19,7 +19,7 @@ func PrimAlgorithmDemo() {
 	minTree1 := MinTree{}
 	minTree1.createGraph(graph1, verxs, data, weight)
 	minTree1.showGraph(graph1)
-
+	minTree1.prim(graph1, 1)
 }
 
 //创建最小生成树
@@ -39,6 +39,34 @@ func (this *MinTree) createGraph(graph MGraph, verxs int, data []string, weight 
 func (this *MinTree) showGraph(graph MGraph) {
 	for _, v := range graph.weight {
 		fmt.Println(v)
+	}
+}
+
+func (this *MinTree) prim(graph MGraph, v int) {
+	visited := make([]int, graph.verxs)
+	for i, _ := range visited {
+		visited[i] = 0
+	}
+	visited[v] = 1 //标记为已访问
+	//h1,h2记录两个顶点的下标
+	h1 := -1
+	h2 := -1
+	minWeight := 10000
+	for k := 1; k < graph.verxs; k++ {
+		for i := 0; i < graph.verxs; i++ {
+			for j := 0; j < graph.verxs; j++ {
+				if visited[i] == 1 && visited[j] == 0 && graph.weight[i][j] < minWeight {
+					minWeight = graph.weight[i][j]
+					h1 = i
+					h2 = j
+				}
+			}
+		}
+		//找到一条最小边
+		fmt.Println("< ", graph.data[h1], ",", graph.data[h2], ">权值：", minWeight)
+		visited[h1] = 1
+		visited[h2] = 1
+		minWeight = 10000
 	}
 }
 
