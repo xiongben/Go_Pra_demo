@@ -44,5 +44,7 @@ func main() {
 	//method.BinarySearchDemo()
 	//method.KMPDemo()
 	//method.GreedyDemo()
-	method.PrimAlgorithmDemo()
+	//method.PrimAlgorithmDemo()
+
+	method.KruskalDemo()
 }
