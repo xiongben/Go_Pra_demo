@@ -18,6 +18,11 @@ func KruskalDemo() {
 	kruskalCase1.create(vertexs, matrix)
 	kruskalCase1.print()
 
+	aa := kruskalCase1.getEdges()
+	for _, v := range aa {
+		fmt.Print(v)
+	}
+
 }
 
 type KruskalCase struct {
@@ -40,7 +45,7 @@ func (this *KruskalCase) create(vertexs []string, matrix [][]int) {
 
 	//统计边
 	for i := 0; i < vlen; i++ {
-		for j := 0; j < vlen; j++ {
+		for j := i + 1; j < vlen; j++ {
 			if this.matrix[i][j] != this.INF {
 				this.edgeNum++
 			}
@@ -69,6 +74,33 @@ func (this *KruskalCase) sortEdges(edges []Edata) {
 			}
 		}
 	}
+}
+
+//得到顶点对应的下标
+func (this *KruskalCase) getPosition(str string) int {
+	for i := 0; i < len(this.vertexs); i++ {
+		if this.vertexs[i] == str {
+			return i
+		}
+	}
+	return -1
+}
+
+//获取图中的边，放到Edata中，后面需要遍历该数组 formation is [['A','B',2],,,]
+func (this *KruskalCase) getEdges() []Edata {
+	index := 0
+	edges := make([]Edata, this.edgeNum)
+	for i := 0; i < len(this.vertexs); i++ {
+		for j := i + 1; j < len(this.vertexs); j++ {
+			if this.matrix[i][j] != this.INF {
+				edgesTmp := Edata{}
+				edgesTmp.create(this.vertexs[i], this.vertexs[j], this.matrix[i][j])
+				edges[index] = edgesTmp
+				index++
+			}
+		}
+	}
+	return edges
 }
 
 type Edata struct {
