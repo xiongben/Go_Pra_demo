@@ -22,6 +22,7 @@ func KruskalDemo() {
 	for _, v := range aa {
 		fmt.Print(v)
 	}
+	kruskalCase1.kruskal()
 
 }
 
@@ -86,6 +87,15 @@ func (this *KruskalCase) getPosition(str string) int {
 	return -1
 }
 
+//得到下标为i的顶点的终点，用于判断是否是回路,ends代表各个顶点的终点，在遍历过程中逐步形成
+//返回对应顶点的终点的下标
+func (this *KruskalCase) getEnd(ends []int, i int) int {
+	for ends[i] != 0 {
+		i = ends[i]
+	}
+	return i
+}
+
 //获取图中的边，放到Edata中，后面需要遍历该数组 formation is [['A','B',2],,,]
 func (this *KruskalCase) getEdges() []Edata {
 	index := 0
@@ -101,6 +111,36 @@ func (this *KruskalCase) getEdges() []Edata {
 		}
 	}
 	return edges
+}
+
+func (this *KruskalCase) kruskal() {
+	index := 0 //表示最后结果数组的索引
+	ends := make([]int, this.edgeNum)
+	//创建结果数组，保存最后的最小生成树
+	rets := make([]Edata, this.edgeNum)
+
+	edges := this.getEdges()
+	this.sortEdges(edges)
+
+	for i := 0; i < this.edgeNum; i++ {
+		p1 := this.getPosition(edges[i].start)
+		p2 := this.getPosition(edges[i].end)
+
+		m := this.getEnd(ends, p1)
+		n := this.getEnd(ends, p2)
+		if m != n { //不构成回路
+			ends[m] = n
+			rets[index] = edges[i]
+			index++
+		}
+	}
+	//打印结果
+	fmt.Println("==============")
+	for _, v := range rets {
+		if v.weight != 0 {
+			fmt.Print(v)
+		}
+	}
 }
 
 type Edata struct {
