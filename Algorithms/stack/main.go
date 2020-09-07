@@ -46,5 +46,6 @@ func main() {
 	//method.GreedyDemo()
 	//method.PrimAlgorithmDemo()
 
-	method.KruskalDemo()
+	//method.KruskalDemo()
+	method.DijkstraDemo()
 }
