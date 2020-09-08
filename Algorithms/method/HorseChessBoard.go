@@ -6,7 +6,7 @@ func HorseBoardDemo() {
 
 type HorseChessBoard struct {
 	X int //棋盘的列数
-	Y int //行数
+	Y int //棋盘的行数
 }
 
 func (this *HorseChessBoard) next(curPoint Point) []Point {
