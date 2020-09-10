@@ -48,5 +48,6 @@ func main() {
 
 	//method.KruskalDemo()
 	//method.DijkstraDemo()
-	method.FloydDemo()
+	//method.FloydDemo()
+	method.HorseBoardDemo()
 }
